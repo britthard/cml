@@ -1,0 +1,15 @@
+---
+- name: Check Config
+  hosts: network
+  gather_facts: no
+
+  tasks:
+    - name: Show run
+      cisco.ios.ios_command:
+        commands:
+          show run
+      register: output
+
+    - name: output
+      debug:
+        var: output.stdout_lines
