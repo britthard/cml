@@ -6,21 +6,6 @@ terraform {
   }
 } 
 
-variable "ip" {
-  type = string
-  default = "0.0.0.0"
-}
-
-variable "username" {
-  type = string
-  default = "root"
-}
-
-variable "password" {
-  type = string
-  default = "toor"
-}
-
 provider "cml2" {
   address = var.ip
   username = var.username
@@ -54,7 +39,10 @@ resource "cml2_node" "r1" {
   x = 0
   y = 0
   label = "r1"
-  configuration = file("r1.txt")
+  configuration = templatefile("r1.tftpl", {
+    sshuser = var.sshuser
+    sshpw = var.sshpw
+  })
 }
 
 resource "cml2_node" "sw1" {
@@ -63,5 +51,8 @@ resource "cml2_node" "sw1" {
   x = 200
   y = 0
   label = "sw1"
-  configuration = file("sw1.txt")
+  configuration = templatefile("sw1.tftpl", {
+    sshuser = var.sshuser
+    sshpw = var.sshpw
+  })
 }

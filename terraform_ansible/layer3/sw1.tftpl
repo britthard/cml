@@ -1,0 +1,33 @@
+!
+hostname sw1
+!
+username ${sshuser} secret ${sshpw}
+enable secret ${sshpw}
+ip domain name hardnet
+!
+crypto key generate rsa modulus 2048
+!
+line vty 0 4
+login local
+transport input ssh
+logging synchronous
+password ${sshpw}
+!
+interface vlan 1
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+!
+ip default-gateway 10.0.0.1
+no ip routing
+!
+interface e0/0
+switchport mode access
+switchport access vlan 1
+!
+no ip routing
+!
+end
+!
+no ip routing
+!
+end

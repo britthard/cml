@@ -1,0 +1,41 @@
+!
+hostname r1
+!
+username ${sshuser} secret ${sshpw}
+enable secret ${sshpw}
+ip domain name hardnet
+!
+crypto key generate rsa modulus 2048
+!
+line vty 0 4
+login local
+transport input ssh
+password ${sshpw}
+logging synchronous
+!
+interface e0/0
+description "ex"
+ip address 192.168.101.50 255.255.255.0
+no shutdown
+!
+interface e0/1
+description "to r2"
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+!
+interface e0/2
+description "to r4"
+ip address 10.0.3.1 255.255.255.0
+no shutdown
+!
+router ospf 1
+router-id 1.1.1.1
+network 10.0.0.0 0.0.255.255 area 0
+network 192.168.101.0 0.0.0.255 area 0
+network 192.168.102.0 0.0.0.255 area 0
+!
+interface loopback0
+ip address 192.168.102.1 255.255.255.0
+no shutdown
+!
+end
