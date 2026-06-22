@@ -1,5 +1,5 @@
 !
-hostname sw1
+hostname #{hostname}
 !
 username ${sshuser} secret ${sshpw}
 enable secret ${sshpw}
@@ -14,7 +14,7 @@ logging synchronous
 password ${sshpw}
 !
 interface vlan 1
-ip address 10.0.0.2 255.255.255.0
+ip address ${mgmtip} ${mask}
 no shutdown
 !
 ip default-gateway 10.0.0.1

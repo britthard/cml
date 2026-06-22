@@ -42,6 +42,8 @@ resource "cml2_node" "r1" {
   configuration = templatefile("r1.tftpl", {
     sshuser = var.sshuser
     sshpw = var.sshpw
+    mgmtip = "192.168.102.1"
+    mask = "255.255.255.0"
   })
 }
 
@@ -54,5 +56,8 @@ resource "cml2_node" "sw1" {
   configuration = templatefile("sw1.tftpl", {
     sshuser = var.sshuser
     sshpw = var.sshpw
+    hostname = "sw1"
+    mgmtip = "10.0.0.2"
+    mask = "255.255.255.0"
   })
 }
